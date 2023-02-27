@@ -7,6 +7,13 @@ import reportWebVitals from "./reportWebVitals";
 import theme from "./theme";
 import { worker } from "./mocks/browser";
 
+
+const cors = require("cors");
+
+
+
+
+
 if (process.env.REACT_APP_MSW === "active") {
   console.log("starting worker");
   worker.start();

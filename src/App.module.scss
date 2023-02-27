@@ -39,3 +39,12 @@
     transform: rotate(360deg);
   }
 }
+
+.startup-card{
+  display: flex;
+  flex-direction: column;
+}
+
+.overview{
+  display: flex;
+}

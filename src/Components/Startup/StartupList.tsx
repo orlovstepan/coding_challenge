@@ -1,5 +1,6 @@
 import { display } from "@mui/system";
 import { Fragment, ReactElement, useState, useEffect } from "react";
+import { List, ListItem, ListSubheader, ListItemText, CardHeader, Box } from '@mui/material'
 
 export default function StartupList(): ReactElement {
   const [startUps, setStartups] = useState([]);
@@ -12,42 +13,24 @@ export default function StartupList(): ReactElement {
   .then(data => setStartups(data));    
   },[])
 
-  const styles = {
-    "startup-card": {
-      display: "flex",
-      "flex-direction": "column",
-      "background-color": "white",
-      width: "90vw",
-      height: "20vh",
-      "margin-bottom": "10px",
-      "justify-content": "center"
-    },
-    "startup-card>*":{
-      padding: "0px"
-    },
-    overview: {
-    
-      display: "flex",
-      "font-size": "0.8rem",
-      color: "grey"
-    },
-
-  } 
-
-
   return <Fragment> 
-      <ul>
+      <List>
         {startUps.map((startUp : any) => 
-        <li className="startup-card" style={styles["startup-card"]}  key={startUp.id}> 
-          <h1 className="startup-card--name"> {startUp.name} </h1>  
-          <div className="overview" style={styles['overview']}>
-            <p> Founded: {new Date(startUp.dateFounded).getFullYear()} | </p>
-            <p> {startUp.employees} employees | </p>
-            <p> {startUp.totalFunding} $ | </p>
-            <p> {startUp.currentInvestmentStage} | </p>
-          </div>
-          <p className="description"> {startUp.shortDescription}</p>
-        </li>)}
-      </ul>
+        <ListItem alignItems="flex-start" sx={{
+          display:"flex",
+          flexDirection:"column",
+          justifyContent:'center',
+          backgroundColor:"white",
+          width:"90vw",
+          marginBottom:"10px",
+          }}
+          key={startUp.id}> 
+          <CardHeader sx={{padding:"10px 0px 0px 0px"}} title={startUp.name}></CardHeader>  
+          <Box sx={{display:"flex", color:"grey"}}>
+            <ListSubheader sx={{fontSize:"0.8rem", padding:"0px", marginTop:"-10px", backgroundColor:"transparent"}}> Founded: {new Date(startUp.dateFounded).getFullYear()} | {startUp.employees} employees | {startUp.totalFunding} $ | {startUp.currentInvestmentStage} |  </ListSubheader>
+          </Box>
+          <ListItemText className="description"> {startUp.shortDescription}</ListItemText>
+        </ListItem>)}
+      </List>
      </Fragment>;
 }

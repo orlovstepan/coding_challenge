@@ -1,5 +1,5 @@
-import { display } from "@mui/system";
 import { Fragment, ReactElement, useState, useEffect } from "react";
+import { SystemStyleObject } from "@mui/system";
 import { List, ListItem, ListSubheader, ListItemText, CardHeader, Box } from '@mui/material'
 import { StartupHttpService } from "../../Http/Startup/Startup.http.service";
 import { Startup } from "../../Types/Startup";
@@ -19,7 +19,16 @@ export default function StartupList(): ReactElement {
       padding: "0px",
       marginTop: "-10px",
       backgroundColor: "transparent",
-    }
+    },
+    listItem: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "flex-start",
+      justifyContent: "center",
+      backgroundColor: "white",
+      width: "90vw",
+      marginBottom: "10px",
+    } as SystemStyleObject,
     
   }
 
@@ -29,27 +38,29 @@ export default function StartupList(): ReactElement {
     
 
   return <Fragment> 
-      <List id="startup-list" >
-        {startUps.map((startUp : any) => 
-        <ListItem className="MuiGrid-item" sx={{
-          display:"flex",
-          flexDirection:"column",
-          alignItems:"flex-start",
-          justifyContent:'center',
-          backgroundColor:"white",
-          width:"90vw",
-          marginBottom:"10px",
-          }}
-          key={startUp.id}> 
-          <CardHeader sx={{padding:"10px 0px 0px 0px"}} title={startUp.name}></CardHeader>  
-          <Box className="overview" sx={styles.overview}>
-            <ListSubheader sx={styles["overview--item"]}> Founded: {new Date(startUp.dateFounded).getFullYear()} |</ListSubheader>
-            <ListSubheader sx={styles["overview--item"]}> {startUp.employees} employees |</ListSubheader>
-            <ListSubheader sx={styles["overview--item"]}> {startUp.totalFunding} $ |</ListSubheader>
-            <ListSubheader sx={styles["overview--item"]}> {startUp.currentInvestmentStage} </ListSubheader>
-          </Box>
-          <ListItemText className="description"> {startUp.shortDescription}</ListItemText>
-        </ListItem>)}
-      </List>
+     <List id="startup-list">
+  {startUps.map((startup: Startup) => (
+    <ListItem key={startup.id} sx={styles.listItem}>
+      <CardHeader sx={{ padding: "10px 0px 0px 0px" }} title={startup.name} />
+      <Box className="overview" sx={styles.overview}>
+        <ListSubheader defaultChecked sx={styles["overview--item"]}>
+          Founded: {new Date(startup.dateFounded).getFullYear()} |
+        </ListSubheader>
+        <ListSubheader sx={styles["overview--item"]}>
+          {startup.employees} employees |
+        </ListSubheader>
+        <ListSubheader sx={styles["overview--item"]}>
+          {startup.totalFunding} $ |
+        </ListSubheader>
+        <ListSubheader sx={styles["overview--item"]}>
+          {startup.currentInvestmentStage}
+        </ListSubheader>
+      </Box>
+      <ListItemText className="description">
+        {startup.shortDescription}
+      </ListItemText>
+    </ListItem>
+  ))}
+</List>
      </Fragment>;
 }
